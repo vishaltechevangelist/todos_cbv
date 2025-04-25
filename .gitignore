@@ -1,0 +1,22 @@
+# Ignore Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore virtual environment folder (if created within the project)
+venv/
+blogenv/
+*.env
+
+# Ignore Django migrations
+*/migrations/*
+
+# Ignore IDE specific files (e.g., VSCode, PyCharm)
+.vscode/
+.idea/
+
+# Ignore Django SQLite DB
+db.sqlite3
+
+# Ignore media upload
+media/*
