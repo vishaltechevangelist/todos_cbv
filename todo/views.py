@@ -4,11 +4,21 @@ from django.views import View
 from .forms import TodoForm
 from .models import Todos
 from django.views.generic.base import TemplateView, RedirectView
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 # Create your views here.
 def home(request):
     return HttpResponse("Hello World")
+
+def detailView(request, id):
+    todo = Todos.objects.get(id=id)
+    return render(request, 'todo/detail.html', {'todo':todo})
+
+class TodoDetailView(DetailView):
+    model = Todos
+    template_name = 'todo/detail.html' # bydefault is todos_detail.html
+    context_object_name = 'todo'
+
 
 # class HomeView(View):
 #     def get(self, request):
@@ -21,8 +31,8 @@ class HomeView(ListView):
     context_object_name = 'todos'
     ordering = '-id'
 
-    def get_queryset(self):
-        return Todos.objects.filter(todo__icontains = 'Django')
+    # def get_queryset(self):
+    #     return Todos.objects.filter(todo__icontains = 'Django')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

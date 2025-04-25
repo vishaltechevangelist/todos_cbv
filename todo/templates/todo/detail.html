@@ -7,21 +7,13 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Class Based View Template</title>
+        <title>Detail Todo</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
+        <h1>{{todo.id}} {{todo.todo}}</h1>
     </head>
     <body>
-        <h1>This is index.html</h1>
-        <h2>{{text}}</h2>
-        <ul>
-            {% for todo in todos %}
-                <a href="{% url "todo" todo.id %}">
-                    <li>{{todo.todo}}</li>
-                </a>
-            {% endfor %}
-        </ul>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
