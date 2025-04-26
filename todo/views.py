@@ -5,6 +5,7 @@ from .forms import TodoForm
 from .models import Todos
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import FormView
 
 # Create your views here.
 def home(request):
@@ -17,7 +18,7 @@ def detailView(request, id):
 class TodoDetailView(DetailView):
     model = Todos
     template_name = 'todo/detail.html' # bydefault is todos_detail.html
-    context_object_name = 'todo'
+    context_object_name = 'todo'       # bydefault model name todos passed as context_object
 
 
 # class HomeView(View):
@@ -39,19 +40,29 @@ class HomeView(ListView):
         context['text'] = 'The ToDo is for Vishal'
         return context
     
-class AddView(View):
-    def get(self, request):
-        form = TodoForm()
-        return render(request, 'todo/add.html', {'form':form})
+# class AddView(View):
+#     def get(self, request):
+#         form = TodoForm()
+#         return render(request, 'todo/add.html', {'form':form})
     
-    def post(self, request):
-        form = TodoForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/')
-        else:
-            return render(request, 'todo/add.html', {'form':form})
+#     def post(self, request):
+#         form = TodoForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect('/')
+#         else:
+#             return render(request, 'todo/add.html', {'form':form})
         
+class AddView(FormView):
+    template_name = 'todo/add.html'
+    form_class = TodoForm # This is modelform recommended use case to use form
+    success_url = '/'
+
+    # To save value from form, need to define form_valid
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+    
 class AboutView(TemplateView):
     template_name = 'todo/about.html'
 
