@@ -5,7 +5,7 @@ from .forms import TodoForm
 from .models import Todos
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
 
 # Create your views here.
 def home(request):
@@ -52,17 +52,25 @@ class HomeView(ListView):
 #             return HttpResponseRedirect('/')
 #         else:
 #             return render(request, 'todo/add.html', {'form':form})
-        
-class AddView(FormView):
-    template_name = 'todo/add.html'
-    form_class = TodoForm # This is modelform recommended use case to use form
+
+# Add view with FormView        
+# class AddView(FormView):
+#     template_name = 'todo/add.html'
+#     form_class = TodoForm # This is modelform recommended use case to use form
+#     success_url = '/'
+
+#     # To save value from form, need to define form_valid
+#     def form_valid(self, form):
+#         form.save()
+#         return super().form_valid(form)
+
+class AddView(CreateView):
+    # model = Todos
+    # fields = '__all__'
+    form_class = TodoForm
+    template_name = 'todo/add_createview.html' # by default <model>_form.html
     success_url = '/'
 
-    # To save value from form, need to define form_valid
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
-    
 class AboutView(TemplateView):
     template_name = 'todo/about.html'
 
@@ -78,3 +86,15 @@ class RedirectAbout(RedirectView):
 class RedirectAbout_1(RedirectView):
     pattern_name = 'home'
     query_string = True
+
+class EditTodoView(UpdateView):
+    model = Todos
+    # fields = '__all__'
+    form_class = TodoForm
+    template_name = 'todo/add_createview.html'
+    success_url = '/'
+
+class DeleteTodoView(DeleteView):
+    model = Todos
+    success_url = '/'
+    template_name = 'todo/confirm_delete.html'

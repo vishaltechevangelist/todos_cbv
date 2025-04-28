@@ -13,4 +13,6 @@ urlpatterns = [
     path('redirect/', views.RedirectAbout_1.as_view()),
     # path('todo/<int:id>/', views.detailView, name="todo"),
     path('todo/<int:pk>/', views.TodoDetailView.as_view(), name="todo"),
+    path('edit/<int:pk>/',views.EditTodoView.as_view(), name='edit'),
+    path('delete/<int:pk>/', views.DeleteTodoView.as_view(), name='delete'),
 ]
